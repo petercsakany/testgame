@@ -8,6 +8,8 @@ body {
 #cardContainer {
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 200px; /* Adjust this as needed for spacing */
     margin-top: 20px;
 }
 
@@ -15,8 +17,14 @@ body {
     width: 72px;  /* width of a single card in the sprite sheet */
     height: 96px;  /* height of a single card in the sprite sheet */
     background-image: url('cards.png');
-    background-size: cover;
+    background-size: 936px 480px; /* exact size of the sprite sheet */
     margin: 0 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.card.show {
+    opacity: 1;
 }
 
 #dealButton {
