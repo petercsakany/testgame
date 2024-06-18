@@ -1,27 +1,26 @@
-const cardElements = document.querySelectorAll(".card");
-const dealButton = document.getElementById("deal-button");
+const cardWidth = 72;  // width of a single card in the sprite sheet
+const cardHeight = 96;  // height of a single card in the sprite sheet
+const cardContainer = document.getElementById('cardContainer');
 
-// Replace these values with the actual width and height of a card in the sprite sheet
-const cardWidth = 100;
-const cardHeight = 150;
-
-// Function to get a random card position from the sprite sheet
 function getRandomCardPosition() {
-  const suitIndex = Math.floor(Math.random() * 4); // 0-3 for suits
-  const cardIndex = Math.floor(Math.random() * 13); // 0-12 for cards
+    const columns = 13;  // number of columns in the sprite sheet
+    const rows = 5;  // number of rows in the sprite sheet
 
-  const xPosition = suitIndex * cardWidth;
-  const yPosition = cardIndex * cardHeight;
+    const randomColumn = Math.floor(Math.random() * columns);
+    const randomRow = Math.floor(Math.random() * rows);
 
-  return `-${xPosition}px -${yPosition}px`;
+    return {
+        x: randomColumn * cardWidth,
+        y: randomRow * cardHeight
+    };
 }
 
-// Function to deal cards (just visual for now)
 function dealCards() {
-  cardElements.forEach((card) => {
-    card.style.backgroundImage = "url('cards.png')"; // Reset background
-    card.style.backgroundPosition = getRandomCardPosition();
-  });
+    for (let i = 1; i <= 4; i++) {
+        const card = document.getElementById(`card${i}`);
+        const { x, y } = getRandomCardPosition();
+        card.style.backgroundPosition = `-${x}px -${y}px`;
+    }
 }
 
-dealButton.addEventListener("click", dealCards);
+document.getElementById('dealButton').addEventListener('click', dealCards);
