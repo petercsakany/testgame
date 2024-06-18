@@ -19,7 +19,7 @@ body {
     background-image: url('cards.png');
     background-size: 936px 480px; /* exact size of the sprite sheet */
     margin: 0 10px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
 
