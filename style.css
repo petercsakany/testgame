@@ -1,0 +1,26 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+#game-board {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.card {
+  width: 100px;
+  height: 150px;
+  background-image: url("cards.png"); /* Replace with your sprite sheet path */
+  background-repeat: no-repeat;
+}
+
+#deal-button {
+  padding: 10px 20px;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
