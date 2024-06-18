@@ -14,12 +14,12 @@ body {
 }
 
 .card {
-    width: 72px;  /* width of a single card in the sprite sheet */
-    height: 96px;  /* height of a single card in the sprite sheet */
+    width: 121px;  /* width of a single card in the sprite sheet */
+    height: 177px;  /* height of a single card in the sprite sheet */
     background-image: url('cards.png');
-    background-size: 936px 480px; /* exact size of the sprite sheet */
+    background-size: 1583px 497px; /* exact size of the sprite sheet */
     margin: 0 10px;
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
 
@@ -29,6 +29,5 @@ body {
 
 #dealButton {
     padding: 10px 20px;
-    font-size: 25px;
-    background-color: #FF0000:
+    font-size: 16px;
 }
