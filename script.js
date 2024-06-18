@@ -10,8 +10,8 @@ function getRandomCardPosition() {
     const randomRow = Math.floor(Math.random() * rows);
 
     return {
-        x: randomColumn * cardWidth,
-        y: randomRow * cardHeight
+        x: 0,
+        y: 0
     };
 }
 
