@@ -1,6 +1,6 @@
 const cardWidth = 72;  // width of a single card in the sprite sheet
 const cardHeight = 96;  // height of a single card in the sprite sheet
-const cardContainer = document.getElementById('cardContainer');
+const card = document.getElementById('card');
 
 function getRandomCardPosition() {
     const columns = 13;  // number of columns in the sprite sheet
@@ -15,12 +15,14 @@ function getRandomCardPosition() {
     };
 }
 
-function dealCards() {
-    for (let i = 1; i <= 4; i++) {
-        const card = document.getElementById(`card${i}`);
-        const { x, y } = getRandomCardPosition();
-        card.style.backgroundPosition = `-${x}px -${y}px`;
-    }
+function dealCard() {
+    const { x, y } = getRandomCardPosition();
+    card.style.backgroundPosition = `-${x}px -${y}px`;
+    card.classList.remove('show'); // Reset the opacity
+    setTimeout(() => card.classList.add('show'), 10); // Add show class with a slight delay
 }
 
-document.getElementById('dealButton').addEventListener('click', dealCards);
+// Initial call to show some cards
+dealCard();
+
+document.getElementById('dealButton').addEventListener('click', dealCard);
