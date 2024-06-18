@@ -1,10 +1,10 @@
-const cardWidth = 72;  // width of a single card in the sprite sheet
-const cardHeight = 96;  // height of a single card in the sprite sheet
+const cardWidth = 121;  // width of a single card in the sprite sheet
+const cardHeight = 177;  // height of a single card in the sprite sheet
 const card = document.getElementById('card');
 
 function getRandomCardPosition() {
     const columns = 13;  // number of columns in the sprite sheet
-    const rows = 5;  // number of rows in the sprite sheet
+    const rows = 4;  // number of rows in the sprite sheet (not including the last row with one card)
 
     const randomColumn = Math.floor(Math.random() * columns);
     const randomRow = Math.floor(Math.random() * rows);
