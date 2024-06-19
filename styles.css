@@ -9,15 +9,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px; /* Adjust this as needed for spacing */
+    height: 340px; /* Adjust this as needed for spacing */
     margin-top: 20px;
 }
 
 .card {
-    width: 121px;  /* width of a single card in the sprite sheet */
-    height: 177px;  /* height of a single card in the sprite sheet */
+    width: 225px;  /* width of a single card in the sprite sheet */
+    height: 315px;  /* height of a single card in the sprite sheet */
     background-image: url('cards.png');
-    background-size: 1583px 497px; /* exact size of the sprite sheet */
+    background-size: 2925px 1260px; /* exact size of the sprite sheet */
     margin: 0 10px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
@@ -29,5 +29,5 @@ body {
 
 #dealButton {
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 32px;
 }
