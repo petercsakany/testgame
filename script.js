@@ -1,5 +1,5 @@
-const cardWidth = 121;  // width of a single card in the sprite sheet
-const cardHeight = 177;  // height of a single card in the sprite sheet
+const cardWidth = 225;  // width of a single card in the sprite sheet
+const cardHeight = 315;  // height of a single card in the sprite sheet
 const card = document.getElementById('card');
 
 function showAceOfClubs() {
