@@ -16,13 +16,19 @@ function getRandomCardPosition() {
 }
 
 function dealCard() {
-    const { x, y } = getRandomCardPosition();
-    card.style.backgroundPosition = `-${x}px -${y}px`;
-    card.classList.remove('show'); // Reset the opacity
-    setTimeout(() => card.classList.add('show'), 10); // Add show class with a slight delay
+  const { x, y } = getRandomCardPosition();
+  card.style.backgroundImage = 'url("card_back.svg")'; // Set back image initially
+  card.classList.remove('show'); // Reset the opacity
+
+  setTimeout(() => {
+    card.style.backgroundPosition = `-${x}px -${y}px`; // Set specific card position
+    card.style.backgroundImage = 'url("cards2.png")'; // Switch to front image
+    card.classList.add('show'); // Add show class with a slight delay
+  }, 10);
 }
 
 // Initial call to show some cards
 dealCard();
 
 document.getElementById('dealButton').addEventListener('click', dealCard);
+
