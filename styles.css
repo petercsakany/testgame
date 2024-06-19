@@ -16,7 +16,7 @@ body {
 .card {
     width: 225px;  /* width of a single card in the sprite sheet */
     height: 315px;  /* height of a single card in the sprite sheet */
-    background-image: url('cards.png');
+    background-image: url('cards2.png');
     background-size: 2925px 1260px; /* exact size of the sprite sheet */
     margin: 0 10px;
     opacity: 0;
