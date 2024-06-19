@@ -16,15 +16,17 @@ body {
 .card {
     width: 225px;  /* width of a single card in the sprite sheet */
     height: 315px;  /* height of a single card in the sprite sheet */
-    background-image: url('cards2.png');
-    background-size: 2925px 1260px; /* exact size of the sprite sheet */
+    background-image: url('card_back.svg');  /* Card back image */
+    background-size: contain;  /* Ensure SVG scales within card */
+    background-position: center;  /* Center the SVG image within the card */
     margin: 0 10px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
 
 .card.show {
-    opacity: 1;
+    background-image: url('cards2.png'); /* Card front image */
+    /* Adjust background-position to show the specific card based on game logic */
 }
 
 #dealButton {
