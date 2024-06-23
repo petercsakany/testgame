@@ -2,34 +2,62 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f0f0f0;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
-#cardContainer {
+h1 {
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-size: 2rem;
+}
+
+#deckContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 340px; /* Adjust this as needed for spacing */
-    margin-top: 20px;
+    height: 40%;
+    flex-shrink: 0;
+}
+
+#handContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    height: 50%;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    align-items: center;
 }
 
 .card {
-    width: 225px;  /* width of a single card in the sprite sheet */
-    height: 315px;  /* height of a single card in the sprite sheet */
-    background-image: url('card_back.svg');  /* Card back image */
-    background-size: contain;  /* Ensure SVG scales within card */
-    background-position: center;  /* Center the SVG image within the card */
-    margin: 0 10px;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    width: auto;
+    height: 100%;
+    border-radius: 10px;
+    margin-right: 3px;
+    cursor: pointer;
+    flex: 0 0 auto;
 }
 
-.card.show {
-    background-image: url('cards2.png'); /* Card front image */
-    /* Adjust background-position to show the specific card based on game logic */
+#deck {
+    cursor: pointer;
+    height: 80%;
+    width: auto;
 }
 
-#dealButton {
-    padding: 10px 20px;
-    font-size: 16px;
+#counter {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
 }
