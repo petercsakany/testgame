@@ -7,14 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Simple SVG Card Game</h1>
-    <div id="deckContainer">
-        <div id="deck"></div>
+    <div id="titleContainer">
+        <button id="startGameButton">Start Game</button>
+        <h1>Simple SVG Card Game</h1>
+        <button id="resetGameButton">Reset Game</button>
     </div>
-    <div id="handContainer"></div>
+    <div id="pilesContainer">
+        <div id="drawPile" class="pile"></div>
+        <div id="discardPile" class="pile"></div>
+    </div>
+    <div id="handContainer">
+        <div id="faceUpContainer"></div>
+        <div id="inHandContainer"></div>
+    </div>
     <div id="counter">Cards Dealt: 0</div>
     <script src="script.js"></script>
 </body>
 </html>
-
-
