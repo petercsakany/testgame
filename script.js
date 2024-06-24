@@ -3,13 +3,13 @@
     const discardPile = document.getElementById('discardPile');
     const faceUpContainer = document.getElementById('faceUpContainer');
     const inHandContainer = document.getElementById('inHandContainer');
-    const counterDisplay = document.getElementById('counter');
     const startGameButton = document.getElementById('startGameButton');
     const resetGameButton = document.getElementById('resetGameButton');
 
     const suits = ["C", "D", "H", "S"];
     const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
     let deckArray = [];
+    resetGameButton.disabled = true;
 
     function initializeDeck() {
         deckArray = [];
@@ -34,7 +34,7 @@
     let faceDownArray = [];
     let faceUpArray = [];
     let inHandArray = [];
-    let score = 0;
+    let discardedArray = [];
     let gameStarted = false;
 
     function getRandomCard() {
@@ -46,6 +46,7 @@
         faceDownArray = [];
         faceUpArray = [];
         inHandArray = [];
+        discardedArray = [];
         for (let i = 0; i < 12; i++) {
             const card = getRandomCard();
             if (i < 4) {
@@ -55,9 +56,9 @@
                 addCardToContainer(card, inHandContainer, true);
             }
         }
-        counterDisplay.textContent = `Cards Dealt: ${score += 12}`;
         gameStarted = true;
-        startGameButton.disabled = true; // Deactivate the start game button
+        startGameButton.disabled = true;
+        resetGameButton.disabled = false;
     }
 
     function dealCard() {
@@ -65,6 +66,10 @@
             alert('The game has not started yet!');
             return;
         }
+		if(discardedArray.length < 1) {
+			alert('You need to discard a card first!');
+            return;
+		}
 
         if (deckArray.length === 0) {
             alert('No more cards in the deck!');
@@ -74,7 +79,6 @@
         const card = getRandomCard();
         inHandArray.push(card);
         addCardToContainer(card, inHandContainer, true);
-        counterDisplay.textContent = `Cards Dealt: ${++score}`;
     }
 
     function addCardToContainer(card, container, isInHand) {
@@ -97,6 +101,7 @@
                 cardElement.removeEventListener('click', () => discardCard(card, cardElement));
             } else {
                 inHandArray = inHandArray.filter(c => c !== card);
+                discardedArray.push(card);
                 discardPile.innerHTML = ''; // Clear the discard pile
                 const discardCard = document.createElement('img');
                 discardCard.className = 'card';
@@ -117,14 +122,11 @@
         // Reset the drawing pile by shuffling the cards
         initializeDeck();
         
-        // Reset face-down, face-up, and in-hand arrays
+        // Reset face-down, face-up, in-hand, and discarded arrays
         faceDownArray = [];
         faceUpArray = [];
         inHandArray = [];
-        
-        // Reset score
-        score = 0;
-        counterDisplay.textContent = `Cards Dealt: 0`;
+        discardedArray = [];
         
         // Reset initial deck image
         const initialDeckCard = document.createElement('img');

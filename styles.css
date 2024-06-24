@@ -13,21 +13,20 @@ body {
 
 #titleContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
-    padding: 0 20px;
     height: 10%;
 }
 
 h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 1.7rem;
 }
 
 button {
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 0.7rem;
     cursor: pointer;
 }
 
@@ -51,18 +50,31 @@ button {
     align-items: center;
     height: 50%;
     width: 100%;
-    padding: 10px;
     box-sizing: border-box;
     background-color: #fff;
 }
 
-#faceUpContainer, #inHandContainer {
+#faceUpContainer {
+	display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 10px;
+	justify-content:center;
+}
+
+#inHandContainer {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     width: 100%;
-    justify-content: center;
     margin-bottom: 10px;
+}
+
+#inHandContainer::before,
+#inHandContainer::after {
+  content: '';
+  flex: 2;
 }
 
 .card {
@@ -72,12 +84,4 @@ button {
     cursor: pointer;
     flex: 0 0 auto;
     transition: transform 0.3s;
-}
-
-#counter {
-    display: flex;
-    width: 100%;
-    padding: 0 20px;
-    height: 10%;
-    font-size: 18px;
 }
