@@ -56,6 +56,7 @@
                 addCardToContainer(card, inHandContainer, true);
             }
         }
+        sortHand();
         gameStarted = true;
         startGameButton.disabled = true;
         resetGameButton.disabled = false;
@@ -66,10 +67,10 @@
             alert('The game has not started yet!');
             return;
         }
-		if(discardedArray.length < 1) {
-			alert('You need to discard a card first!');
+        if (discardedArray.length < 1) {
+            alert('You need to discard a card first!');
             return;
-		}
+        }
 
         if (deckArray.length === 0) {
             alert('No more cards in the deck!');
@@ -79,6 +80,7 @@
         const card = getRandomCard();
         inHandArray.push(card);
         addCardToContainer(card, inHandContainer, true);
+        sortHand();
     }
 
     function addCardToContainer(card, container, isInHand) {
@@ -102,15 +104,24 @@
             } else {
                 inHandArray = inHandArray.filter(c => c !== card);
                 discardedArray.push(card);
-                discardPile.innerHTML = ''; // Clear the discard pile
-                const discardCard = document.createElement('img');
-                discardCard.className = 'card';
-                discardCard.src = `${card.rank}${card.suit}.svg`;
-                discardCard.alt = `${card.rank} of ${card.suit}`;
-                discardPile.appendChild(discardCard);
-                cardElement.remove(); // Remove card from container
+                cardElement.classList.add('discard-animation');
+                cardElement.addEventListener('animationend', () => {
+                    discardPile.innerHTML = ''; // Clear the discard pile
+                    const discardCard = document.createElement('img');
+                    discardCard.className = 'card';
+                    discardCard.src = `${card.rank}${card.suit}.svg`;
+                    discardCard.alt = `${card.rank} of ${card.suit}`;
+                    discardPile.appendChild(discardCard);
+                    cardElement.remove(); // Remove card from container
+                });
             }
         }
+    }
+
+    function sortHand() {
+        inHandArray.sort((a, b) => ranks.indexOf(a.rank) - ranks.indexOf(b.rank));
+        inHandContainer.innerHTML = ''; // Clear current hand display
+        inHandArray.forEach(card => addCardToContainer(card, inHandContainer, true));
     }
 
     function resetGame() {

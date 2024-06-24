@@ -7,7 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     box-sizing: border-box;
 }
 
@@ -74,7 +74,13 @@ button {
 #inHandContainer::before,
 #inHandContainer::after {
   content: '';
-  flex: 2;
+  flex: 1;
+}
+
+#faceUpContainer::before,
+#faceUpContainer::after {
+  content: '';
+  flex: 1;
 }
 
 .card {
@@ -85,3 +91,19 @@ button {
     flex: 0 0 auto;
     transition: transform 0.3s;
 }
+
+@keyframes discard {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.5) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.card.discard-animation {
+    animation: discard 0.5s forwards;
+}
+
