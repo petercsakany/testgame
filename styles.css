@@ -7,7 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 90vh;
+    height: 100vh;
     box-sizing: border-box;
 }
 
@@ -34,8 +34,9 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40%;
-    gap: 20px; /* space between draw and discard piles */
+    height: 30%;
+    gap: 20px;
+    /* space between draw and discard piles */
 }
 
 .pile {
@@ -51,15 +52,21 @@ button {
     height: 50%;
     width: 100%;
     box-sizing: border-box;
-    background-color: #fff;
+    background-color: #d7cdcd;
 }
 
 #faceUpContainer {
-	display: flex;
+    display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     width: 100%;
     margin-bottom: 10px;
+}
+
+#faceUpContainer .card {
+    height: 80%;
+    max-width: 25%;
+    margin: 10px;
 }
 
 #inHandContainer {
@@ -68,23 +75,30 @@ button {
     overflow-x: auto;
     width: 100%;
     margin-bottom: 10px;
+    align-items: center;
+}
+
+#inHandContainer .card {
+    height: 50%;
+    margin-right: -30px;
 }
 
 #inHandContainer::before,
 #inHandContainer::after {
-  content: '';
-  flex: 1;
+    content: '';
+    flex: 1;
 }
 
 #faceUpContainer::before,
 #faceUpContainer::after {
-  content: '';
-  flex: 1;
+    content: '';
+    flex: 1;
 }
 
 .card {
     width: auto;
-    height: 80%; /* Adjusted height for better visibility */
+    height: 80%;
+    /* Adjusted height for better visibility */
     margin-right: 10px;
     cursor: pointer;
     flex: 0 0 auto;
@@ -96,6 +110,7 @@ button {
         transform: scale(1) rotate(0deg);
         opacity: 1;
     }
+
     100% {
         transform: scale(0.5) rotate(360deg);
         opacity: 0;
@@ -105,4 +120,3 @@ button {
 .card.discard-animation {
     animation: discard 0.5s forwards;
 }
-

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     const drawPile = document.getElementById('drawPile');
     const discardPile = document.getElementById('discardPile');
     const faceUpContainer = document.getElementById('faceUpContainer');
@@ -129,23 +129,23 @@
         faceUpContainer.innerHTML = '';
         inHandContainer.innerHTML = '';
         discardPile.innerHTML = '';
-        
+
         // Reset the drawing pile by shuffling the cards
         initializeDeck();
-        
+
         // Reset face-down, face-up, in-hand, and discarded arrays
         faceDownArray = [];
         faceUpArray = [];
         inHandArray = [];
         discardedArray = [];
-        
+
         // Reset initial deck image
         const initialDeckCard = document.createElement('img');
         initialDeckCard.className = 'pile';
         initialDeckCard.src = '2B.svg'; // Path to the back of the card SVG
         drawPile.innerHTML = ''; // Clear existing draw pile
         drawPile.appendChild(initialDeckCard);
-        
+
         // Reset initial discard pile image
         const initialDiscardCard = document.createElement('img');
         initialDiscardCard.className = 'pile';
@@ -174,4 +174,4 @@
     initialDiscardCard.className = 'pile';
     initialDiscardCard.src = '1B.svg'; // Path to the empty discard pile SVG
     discardPile.appendChild(initialDiscardCard);
-})(this);
+})();
