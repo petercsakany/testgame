@@ -7,6 +7,7 @@
     const aiFaceUpContainer = document.getElementById('aiFaceUpContainer');
     const startGameButton = document.getElementById('startGameButton');
     const resetGameButton = document.getElementById('resetGameButton');
+    const discardButton = document.getElementById('discardButton');
     const initialDeckCard = document.createElement('img');
     const initialDiscardCard = document.createElement('img');
     let turnText = document.getElementById('turnText');
@@ -14,6 +15,7 @@
     // Event Listeners
     startGameButton.addEventListener('click', initialDeal);
     resetGameButton.addEventListener('click', resetGame);
+    discardButton.addEventListener('click', discardSelectedCards);
     //drawPile.addEventListener('click', dealCard);
 
     // Game Constants
@@ -30,6 +32,7 @@
     let faceDownArray = [];
     let faceUpArray = [];
     let inHandArray = [];
+    let selectedCards = [];
     let aiFaceDownArray = [];
     let aiFaceUpArray = [];
     let aiInHandArray = [];
@@ -54,6 +57,7 @@
         faceDownArray = [];
         faceDownArray = [];
         inHandArray = [];
+        selectedCards = [];
         aiFaceDownArray = [];
         aiFaceUpArray = [];
         aiInHandArray = [];
@@ -112,6 +116,7 @@
         faceDownArray = [];
         faceDownArray = [];
         inHandArray = [];
+        selectedCards = [];
         aiFaceDownArray = [];
         aiFaceUpArray = [];
         aiInHandArray = [];
@@ -183,12 +188,17 @@
             aiInHandArray.splice(cardIndex, 1); // Remove the selected card from AI's hand
             discardedArray.push(selectedCard); // Add the card to the discard pile
 
-            const cardElement = document.createElement('img');
-            cardElement.className = 'card';
-            cardElement.src = `${selectedCard.rank}${selectedCard.suit}.svg`;
-            cardElement.alt = `${selectedCard.rank} of ${selectedCard.suit}`;
             discardPile.innerHTML = '';
-            discardPile.appendChild(cardElement);
+            if (selectedCard.rank === 'T') {
+                discardedArray = [];
+            }
+            else {
+                const cardElement = document.createElement('img');
+                cardElement.className = 'card';
+                cardElement.src = `${selectedCard.rank}${selectedCard.suit}.svg`;
+                cardElement.alt = `${selectedCard.rank} of ${selectedCard.suit}`;
+                discardPile.appendChild(cardElement);
+            }
             if (aiInHandArray.length < 4) { dealCard('ai', false) };
         }
     }
@@ -198,8 +208,11 @@
         if (firstTurn) return true;
         if (discardedArray.length === 0) return true; // Any card can be played first
         const lastDiscardedCard = discardedArray[discardedArray.length - 1];
-        if (card.rank === '2' || card.rank === '10') return true; // 2 and 10 can be played on any card
+        if (card.rank === '2' || card.rank === 'T') return true; // 2 and 10 can be played on any card
         let isValid = ranks.indexOf(card.rank) >= ranks.indexOf(lastDiscardedCard.rank);
+        if (lastDiscardedCard.rank == '5') {
+            isValid = ranks.indexOf(card.rank) <= ranks.indexOf(lastDiscardedCard.rank);
+        }
         console.log('valid card: ' + JSON.stringify(card) + ' ' + isValid);
         return isValid;
     }
@@ -248,6 +261,71 @@
         }
     }
 
+    function toggleCardSelection(card, cardElement) {
+        if (selectedCards.includes(card)) {
+            selectedCards = selectedCards.filter(c => c !== card);
+            cardElement.classList.remove('selected');
+        } else {
+            if (selectedCards.length === 0 || selectedCards[0].rank === card.rank) {
+                selectedCards.push(card);
+                cardElement.classList.add('selected');
+            }
+        }
+    }
+
+    function discardSelectedCards() {
+        if (selectedCards.length > 0) {
+            const rank = selectedCards[0].rank;
+
+            // Check if all selected cards are of the same rank for normal gameplay discarding
+            const allSameRank = selectedCards.every(card => card.rank === rank);
+
+            if (faceUpArray.length < 4) {
+                // Handle placing cards in the face-up array (no need for same rank)
+                selectedCards.forEach(card => {
+                    const cardElement = document.querySelector(`img[alt="${card.rank} of ${card.suit}"]`);
+                    faceUpArray.push(card);
+                    inHandArray = inHandArray.filter(c => c !== card);
+                    faceUpContainer.appendChild(cardElement);
+                    cardElement.removeEventListener('click', () => toggleCardSelection(card, cardElement));
+                    cardElement.classList.remove('selected');
+                });
+                selectedCards = [];
+            } else if (currentTurn === 'player' && allSameRank && selectedCards.every(card => isValidMove(card))) {
+                // Handle normal gameplay discarding
+                selectedCards.forEach(card => {
+                    const cardElement = document.querySelector(`img[alt="${card.rank} of ${card.suit}"]`);
+                    inHandArray = inHandArray.filter(c => c !== card);
+                    discardedArray.push(card);
+                    cardElement.classList.add('discard-animation');
+                    cardElement.addEventListener('animationend', () => {
+                        discardPile.innerHTML = ''; // Clear the discard pile
+                        const discardCard = document.createElement('img');
+                        discardCard.className = 'card';
+                        discardCard.src = `${card.rank}${card.suit}.svg`;
+                        discardCard.alt = `${card.rank} of ${card.suit}`;
+                        discardPile.appendChild(discardCard);
+                        cardElement.remove(); // Remove card from container
+                    });
+                    cardElement.classList.remove('selected');
+                });
+
+                if (inHandArray.length < 4) {
+                    dealCard('player', false);
+                }
+                if (rank === 'T') {
+                    discardPile.innerHTML = '';
+                    discardedArray = [];
+                }
+                selectedCards = [];
+                currentTurn = 'ai';
+                nextTurn(); // Switch to AI's turn
+            } else {
+                alert('Invalid move! All selected cards must be of the same rank and valid to play.');
+            }
+        }
+    }
+
     /** Discards a card.
      @param {Object} card - The card object.
      @param {HTMLElement} cardElement - The HTML element representing the card.
@@ -285,6 +363,10 @@
                             cardElement.remove(); // Remove card from container
                         });
                         if (inHandArray.length < 4) { dealCard('player', false) };
+                        if (card.rank === 'T') {
+                            discardPile.innerHTML = '';
+                            discardedArray = [];
+                        }
                         currentTurn = 'ai';
                         nextTurn(); // Switch to AI's turn
                     } else {
@@ -313,7 +395,7 @@
         newCard.src = `${card.rank}${card.suit}.svg`;
         newCard.alt = `${card.rank} of ${card.suit}`;
         if (isInHand) {
-            newCard.addEventListener('click', () => discardCard(card, newCard));
+            newCard.addEventListener('click', () => toggleCardSelection(card, newCard));
         }
         container.appendChild(newCard);
 

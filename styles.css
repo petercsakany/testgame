@@ -131,11 +131,15 @@ button {
 
 .card {
     width: auto;
-    height: 80%;
+    height: 90%;
     margin-right: 10px;
     cursor: pointer;
     flex: 0 0 auto;
     transition: transform 0.3s;
+}
+
+.card.selected {
+    border: 1px solid olivedrab;
 }
 
 @keyframes discard {
