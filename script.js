@@ -22,6 +22,7 @@
     const suits = ["C", "D", "H", "S"];
     const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
     resetGameButton.disabled = true;
+    discardButton.disabled = true;
     let gameStarted = false;
     let currentTurn = ''; // 'player' or 'ai'
     let firstTurn = true;
@@ -94,6 +95,7 @@
 
         gameStarted = true;
         startGameButton.disabled = true;
+        discardButton.disabled = false;
         resetGameButton.disabled = false;
         nextTurn();
     }
@@ -146,15 +148,20 @@
         }
         if (currentTurn === 'player') {
             turnText.innerHTML = 'Player turn';
+            enablePlayerCards();
         } else {
             turnText.innerHTML = 'AI turn';
+            disablePlayerCards();
+            document.body.classList.add('grayscale');
             setTimeout(() => {
                 aiTurn();
                 currentTurn = 'player';
+                document.body.classList.remove('grayscale');
                 nextTurn();
-            }, 1500); // Simulate AI thinking time
+            }, 2500); // Simulate AI thinking time
         }
     }
+
 
     function aiTurn() {
         if (currentTurn === 'ai') {
@@ -262,11 +269,11 @@
     }
 
     function toggleCardSelection(card, cardElement) {
-        if (selectedCards.includes(card)) {
+        if (selectedCards.includes(card) && currentTurn == 'player') {
             selectedCards = selectedCards.filter(c => c !== card);
             cardElement.classList.remove('selected');
         } else {
-            if (selectedCards.length === 0 || selectedCards[0].rank === card.rank) {
+            if (faceUpArray.length < 4 || selectedCards.length === 0 || selectedCards[0].rank === card.rank) {
                 selectedCards.push(card);
                 cardElement.classList.add('selected');
             }
@@ -313,9 +320,10 @@
                 if (inHandArray.length < 4) {
                     dealCard('player', false);
                 }
-                if (rank === 'T') {
+                if (rank === 'T' || selectedCards.length >= 4) {
                     discardPile.innerHTML = '';
                     discardedArray = [];
+                    alert('Discard pile was burned by ' + selectedCards[0].rank);
                 }
                 selectedCards = [];
                 currentTurn = 'ai';
@@ -324,7 +332,23 @@
                 alert('Invalid move! All selected cards must be of the same rank and valid to play.');
             }
         }
+        else {
+            alert('Please select one or more cards.');
+        }
     }
+
+    function disablePlayerCards() {
+        document.querySelectorAll('#inHandContainer .card').forEach(card => {
+            card.classList.add('disabled');
+        });
+    }
+
+    function enablePlayerCards() {
+        document.querySelectorAll('#inHandContainer .card').forEach(card => {
+            card.classList.remove('disabled');
+        });
+    }
+
 
     /** Discards a card.
      @param {Object} card - The card object.

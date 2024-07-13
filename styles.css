@@ -111,6 +111,7 @@ button {
     width: 100%;
     margin-bottom: 10px;
     align-items: center;
+    z-index: 10;
 }
 
 #inHandContainer .card {
@@ -135,11 +136,33 @@ button {
     margin-right: 10px;
     cursor: pointer;
     flex: 0 0 auto;
-    transition: transform 0.3s;
+    transition: transform 0.3s, z-index 0s;
 }
 
 .card.selected {
-    border: 1px solid olivedrab;
+    transform: translateY(-10px);
+    transition: transform 0.2s ease, z-index 0s;
+    z-index: 100;
+    /* Ensure selected cards appear above others */
+}
+
+.card.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    /* or any visual indicator you prefer */
+}
+
+#aiContainer,
+#pilesContainer,
+#handContainer,
+#controlContainer {
+    position: relative;
+    z-index: 1;
+    /* Ensure other containers have a lower z-index */
+}
+
+.grayscale {
+    filter: grayscale(100%);
 }
 
 @keyframes discard {
@@ -170,33 +193,4 @@ button {
 
 .card.fade-in {
     animation: fadeIn 1s ease-in-out;
-}
-
-/* Spinner container */
-#aiSpinner {
-    display: none;
-    /* Hidden by default */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 16px solid #f3f3f3;
-    /* Light grey */
-    border-top: 16px solid #3498db;
-    /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
-
-/* Spinner animation */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
 }
